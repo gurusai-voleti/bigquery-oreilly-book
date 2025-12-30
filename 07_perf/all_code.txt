@@ -627,7 +627,7 @@ SELECT
   , duration
 FROM `bigquery-public-data`.london_bicycles.cycle_hire 
 --use_bqstorage_apiimport google.cloud.bigquery.magics
-google.cloud.bigquery.magics.context.use_bqstorage_api = Truegsutil lifecycle set lifecycle.yaml gs://some_bucket/
+google.cloud.bigquery.magics.context.use_bqstorage_api = Truegcloud storage buckets update gs://some_bucket/ --lifecycle-file=lifecycle.yaml
 {
 "lifecycle": {
   "rule": [

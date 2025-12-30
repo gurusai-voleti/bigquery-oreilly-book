@@ -146,7 +146,7 @@ SELECT *
 FROM ch04.college_scorecard_etl
 WHERE SAT_AVG IS NULL
 SQL COPYbq cpbq cp ch04.college_scorecard someds.college_scorecard_copy
-bq cp-a--append_table-noappend_tableCREATE TABLE AS SELECTINSERT VALUESbq cpgsutil cpbq loadgsutil -m cp *.csv gs://BUCKET/some/location
+bq cp-a--append_table-noappend_tableCREATE TABLE AS SELECTINSERT VALUESbq cpgsutil cpbq loadgcloud storage cp *.csv gs://BUCKET/some/location
 bqload … gs://BUCKET/some/location/*.csv 
 bq loadbq loadbq loadbq mkdef
 bq mkbq mkdefbq load--autodetect:
@@ -167,7 +167,7 @@ course_grades.csv-00095-of-00313bq mkdef --source_format=CSV \
 LOC="--location US"
 INPUT=gs://bigquery-oreilly-book/college_scorecard.csv
 
-SCHEMA=$(gsutil cat $INPUT | head -1 | awk -F, '{ORS=","}{for (i=1; i <= NF; i++){ print $i":STRING"; }}' | sed 's/,$//g'| cut -b 4- )
+SCHEMA=$(gcloud storage cat $INPUT | head -1 | awk -F, '{ORS=","}{for (i=1; i <= NF; i++){ print $i":STRING"; }}' | sed 's/,$//g'| cut -b 4- )
 
 bq $LOC query \
    --external_table_definition=cstable::${SCHEMA}@CSV=${INPUT} \
@@ -183,7 +183,7 @@ STRINGINTEGERDATETIMESTAMPbq load --source_format=ORC --autodetect \
        --hive_partitioning_mode=AUTO <gcs_uri>  > table_def.jsonbq mkdef --source_format=NEWLINE_DELIMITED_JSON --autodetect --hive_partitioning_mode=STRINGS <gcs_uri> <schema>  > table_def.json
 bq mkdefFIELD1:DATATYPE1,FIELD2:DATATYPE2,...
 FIELD1,FIELD2,FIELD3,,...INPUT=gs://bigquery-oreilly-book/college_scorecard.csv
-SCHEMA=$(gsutil cat $INPUT | head -1 | cut -b 4- )
+SCHEMA=$(gcloud storage cat $INPUT | head -1 | cut -b 4- )
 sedLOC="--location US"
 OUTPUT=/tmp/college_scorecard_def.json
 bq $LOC \
@@ -274,7 +274,7 @@ CREATE TABLEbq query--destination_tableJSON_EXTRACTprotopayload_auditlog.metadat
   ORDER BY dataReadEvents DESC
   LIMIT 5
 JSON_EXTRACTprotopayload_auditlog.metadataJsonsomedbmysql somedb < select_data.sql | \
-      gsutil cp - gs://BUCKET/data_$(date -u "+%F-%T").tsvselect_data.sqlselect * from my_table 
+      gcloud storage cp - gs://BUCKET/data_$(date -u "+%F-%T").tsvselect_data.sqlselect * from my_table 
 where  transaction_date >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
 https://sheets.newSELECT * from advdata.students
 SELECT
@@ -362,5 +362,5 @@ rows_to_insert = [
     (u'Guam U.', 0.43,0.21,28000,1234,33000)
 ]
 errors = client.insert_rows(table, rows_to_insert)  # API request
-bq load gsutilgsutil -m cp /some/dir/myfiles*.csv gs://bucket/some/dir
+bq load gsutilgcloud storage cp /some/dir/myfiles*.csv gs://bucket/some/dir
 bq loadgsutil bq load

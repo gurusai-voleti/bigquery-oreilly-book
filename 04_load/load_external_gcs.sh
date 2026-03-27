@@ -8,7 +8,7 @@ bq $LOC rm ch04.college_scorecard_gcs # replace
 
 DEF=/tmp/college_scorecard_def.json
 
-SCHEMA=$(gsutil cat $INPUT | head -1 | awk -F, '{ORS=","}{for (i=1; i <= NF; i++){ print $i":STRING"; }}' | sed 's/,$//g'| cut -b 4- )
+SCHEMA=$(gcloud storage cat $INPUT | head -1 | awk -F, '{ORS=","}{for (i=1; i <= NF; i++){ print $i":STRING"; }}' | sed 's/,$//g'| cut -b 4- )
 echo $SCHEMA > /tmp/schema.txt
 
 bq $LOC \
@@ -23,4 +23,3 @@ bq $LOC \
 
 
 bq mk --external_table_definition=$DEF ch04.college_scorecard_gcs
-

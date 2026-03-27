@@ -62,13 +62,12 @@ def write_json_string(json_string, output_gcsfile):
     with open(fname, 'w') as ofp:
         json.dump(schema, ofp, sort_keys=False, indent=2)
     os.close(fd)
-    exec_shell_command(['gsutil', 'cp', fname, output_gcsfile])
+    exec_shell_command(['gcloud', 'storage', 'cp', fname, output_gcsfile])
 
 def read_json_string(gcsfile):
     """
     Read a json string to a file from Google Cloud Storage
     :gcsfile:  URL starting with gs://
     """
-    json_string = exec_shell_command(['gsutil', 'cat', gcsfile])
+    json_string = exec_shell_command(['gcloud', 'storage', 'cat', gcsfile])
     return json.loads(json_string)
-

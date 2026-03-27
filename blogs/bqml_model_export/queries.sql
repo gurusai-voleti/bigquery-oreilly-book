@@ -23,11 +23,11 @@ SELECT * FROM ML.PREDICT(MODEL ch09eu.bicycle_model_linear,(
 
 PROJECT=$(gcloud config get-value project)
 BUCKET=${PROJECT}-eu
-gsutil mb -l eu gs://${BUCKET}
+gcloud storage buckets create --location=eu gs://${BUCKET}
 bq extract -m ch09eu.bicycle_model_linear gs://${BUCKET}/bqml_model_export/bicycle_model_linear
 
 
-gsutil ls gs://${BUCKET}/bqml_model_export/bicycle_model_linear/
+gcloud storage ls gs://${BUCKET}/bqml_model_export/bicycle_model_linear/
     gs://ai-analytics-solutions-eu/bqml_model_export/bicycle_model_linear/
     gs://ai-analytics-solutions-eu/bqml_model_export/bicycle_model_linear/saved_model.pb
     gs://ai-analytics-solutions-eu/bqml_model_export/bicycle_model_linear/assets/
